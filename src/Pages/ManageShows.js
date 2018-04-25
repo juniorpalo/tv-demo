@@ -14,14 +14,7 @@ class ManageShows extends Component {
             name: '',
             rating: -1,
             newPreviewImage: ''
-        },
-        shows: [
-            {
-                name: 'Rick and Morty',
-                rating: 8,
-                newPreviewImage: 'https://static.posters.cz/image/750/plakaty/rick-and-morty-watch-i50046.jpg'
-            }
-        ]
+        }
     }
 
     handleOnChange = (event)=> {
@@ -57,11 +50,21 @@ class ManageShows extends Component {
         })
     }
 
+    getAvgRating = () => {
+        const sumOfRatings = this.props.allShows.reduce((accumulater, show) => {
+            return show.rating + accumulater
+        }, 0)
+        return sumOfRatings / this.props.allShows.length
+    }
+
     render() {
         return (
             <div className="manageShows">
                 <section className="viewAllShows">
-                    <header><h1>All Shows</h1></header>
+                    <header>
+                        <h1>All Shows</h1>
+                        <p>Avg Rating: {this.getAvgRating()}</p>
+                    </header>
                     <div>
                         {this.renderShows()}
                     </div>
