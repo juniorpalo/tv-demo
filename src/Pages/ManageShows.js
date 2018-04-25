@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
 import Show from './Show'
+import {Link} from 'react-router-dom'
+import ReactPropTypes from 'prop-types'
+import './ManageShows.css'
 
 class ManageShows extends Component {
+    static propTypes = {
+        createShow: ReactPropTypes.func.isRequired
+    }
+
     state = {
         show: {
             name: '',
@@ -35,49 +42,24 @@ class ManageShows extends Component {
         }
 }
     handleOnClick = () => {
-        this.setState((prev) => {
-            const existingShows = prev.shows
-            existingShows.push({
-                    name: prev.newShowName,
-                    rating: prev.newShowRating,
-                    newPreviewImage: prev.newPreviewImage
-                })
-
-            return {
-                shows: existingShows
-            }
+        this.props.createShow({
+            name: this.state.newShowName,
+            rating: this.state.newShowRating,
+            newPreviewImage: this.state.newPreviewImage
         })
     }
 
     renderShows = () => {
-        //const showComponents = []
-
-        // for (const show of this.state.shows) {
-        //     showComponents.push(
-        //     <Show key={0} name={show.name} rating={show.rating} newPreviewImage={show.newPreviewImage}/>                                        
-        //     )
-        // }
-
-        // for(let i =0; i < showComponents.length; i++) {
-        //     const show = showComponents[i];
-
-        //     showComponents.push(
-        //         <Show key ={i} name={show.name} rating={show.rating} newPreviewImage={show.newPreviewImage}/>
-        //     )
-        // }
-
-        //return showComponents
-
-        return this.state.shows.map((show, i) => {
-            return (
-                <Show key ={i} name={show.name} rating={show.rating} newPreviewImage={show.newPreviewImage}/>
+            return this.props.allShows.map((show, i) => {
+                return (
+                 <Show key ={i} name={show.name} rating={show.rating} newPreviewImage={show.newPreviewImage}/>
             )
         })
     }
 
     render() {
         return (
-            <div>
+            <div className="manageShows">
                 <section className="viewAllShows">
                     <header><h1>All Shows</h1></header>
                     <div>
@@ -92,6 +74,7 @@ class ManageShows extends Component {
                         <div><label>Preview Image</label><input id="previewInput" onChange={this.handleOnChange}/></div>
                         <button onClick={this.handleOnClick}>Create</button>
                     </div>
+                    <Link to="/">Home</Link>
                 </section>
             </div>
         )
