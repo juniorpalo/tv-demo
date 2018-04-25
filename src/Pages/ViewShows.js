@@ -9,7 +9,7 @@ export default class ViewShows extends Component {
     }
     renderShows = () => {
         const noMaShows = this.props.allShows.filter((show) => {
-            return (show.rating) < 5
+            return (show.rating) <= 4
         })
 
         return noMaShows.map((show) => {
