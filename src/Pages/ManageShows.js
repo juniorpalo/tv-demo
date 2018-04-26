@@ -57,6 +57,24 @@ class ManageShows extends Component {
         return sumOfRatings / this.props.allShows.length
     }
 
+    hasEnoughKidShows = () => {
+        const minRequiredKidShows = 2
+
+        let kidShowCount = 0
+        let remainingShows = this.props.allShows.length
+        while (kidShowCount < minRequiredKidShows && remainingShows) {
+            remainingShows--
+
+            const show = this.props.allShows[remainingShows]
+
+            if (show.rating === 1){
+                kidShowCount++
+            }
+        }
+
+        return (kidShowCount >= minRequiredKidShows).toString()
+    }
+
     render() {
         return (
             <div className="manageShows">
@@ -64,6 +82,7 @@ class ManageShows extends Component {
                     <header>
                         <h1>All Shows</h1>
                         <p>Avg Rating: {this.getAvgRating()}</p>
+                        <p>Kid Shows: {this.hasEnoughKidShows()}</p>
                     </header>
                     <div>
                         {this.renderShows()}
