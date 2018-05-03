@@ -12,7 +12,7 @@ export default class Show extends Component {
         return (
             <article>
                 <header><h3>{this.props.name}</h3></header>
-                <p>{this.props.rating}</p>
+                <p>Rated: {this.props.rating}</p>
                 <img src={this.props.newPreviewImage} alt='unknown'/>
             </article>
         )

@@ -30,7 +30,7 @@ class ManageShows extends Component {
     }
         else if (event.target.id === "previewInput"){
             this.setState({
-                newPreviewImage: event.target.value
+                newPreviewImage: event.target.valuer
             })
         }
 }
@@ -81,8 +81,8 @@ class ManageShows extends Component {
                 <section className="viewAllShows">
                     <header>
                         <h1>All Shows</h1>
-                        <p>Avg Rating: {this.getAvgRating()}</p>
-                        <p>Kid Shows: {this.hasEnoughKidShows()}</p>
+                        <p>Average Rating: {this.getAvgRating()}</p>
+                        <p>Kid Shows Avaliable: {this.hasEnoughKidShows()}</p>
                     </header>
                     <div>
                         {this.renderShows()}
