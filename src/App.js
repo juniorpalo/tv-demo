@@ -48,8 +48,37 @@ class App extends Component {
         this.setState({ shows })
       })
       .catch((error) => {
-        console.log(error)
+        // console.log(error)
+        this.setState({ errorMessage: error })
       })
+  }
+
+  postShow = (showToSave) => {
+    const postInit = {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(showToSave)
+    }
+    fetch('http://localhost:3001/shows', postInit)
+      .then((postShowsResponse) => {
+        return postShowsResponse.json()
+      })
+      .then((show) => {
+        this.createShow(show)
+      })
+      .catch((error) => {
+        this.setState({ errorMessage: error })
+      })
+  }
+
+  renderError = () => {
+    console.log("errormessage is:", this.state.errorMessage)
+    return this.state.errorMessage
+    ? (<div>{this.state.errorMessage.toString()}</div>)
+    : (<div></div>)
   }
 
   componentDidMount() {
@@ -61,9 +90,10 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
+        {this.renderError()}
           <Switch>
             <Route exact path="/" component={() => <ViewShows allShows={this.state.shows} />} />
-            <Route path="/manageShows" component={() => <ManageShows allShows={this.state.shows} createShow={this.createShow} />} />
+            <Route path="/manageShows" component={() => <ManageShows allShows={this.state.shows} createShow={this.postShow} />} />
           </Switch>
         </div>
       </Router>

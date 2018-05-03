@@ -9,14 +9,6 @@ class ManageShows extends Component {
         createShow: ReactPropTypes.func.isRequired
     }
 
-    state = {
-        show: {
-            name: '',
-            rating: -1,
-            newPreviewImage: ''
-        }
-    }
-
     handleOnChange = (event)=> {
         if (event.target.id === "nameInput"){
         this.setState({
@@ -30,7 +22,7 @@ class ManageShows extends Component {
     }
         else if (event.target.id === "previewInput"){
             this.setState({
-                newPreviewImage: event.target.valuer
+                newPreviewImage: event.target.value
             })
         }
 }
