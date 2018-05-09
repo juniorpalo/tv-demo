@@ -10,6 +10,7 @@ class App extends Component {
   }
 
   createShow = (show) => {
+    console.log(show)
     this.setState((prev) => {
       const existingShows = prev.shows
       existingShows.push(show)
@@ -20,40 +21,17 @@ class App extends Component {
     })
   }
 
-  testPromises = () => {
-    console.log('testing stuff')
-    new Promise((resolve, reject) => {
-      const success = true
-      setTimeout(() => {
-        if (success)
-          resolve('promise was good dude')
-        else
-          reject('promise got mugged and stabbed')
-      }, 8000)
-
-    })
-      .then((value) => { console.log(value) })
-      .catch((error) => { console.log(error) })
-    console.log('finished executing promise')
-  }
-
-  getShows = () => {
-    fetch('http://localhost:3001/shows')
-      .then((response) => {
-        console.log("response:", response)
-        return response.json()
-      })
-      .then((shows) => {
-        console.log("jsonData:", shows)
+  getShows = async () => {
+    try {
+    const response = await fetch('http://localhost:3001/shows')
+        const shows = await response.json()
         this.setState({ shows })
-      })
-      .catch((error) => {
-        // console.log(error)
+    } catch (error){
         this.setState({ errorMessage: error })
-      })
+      }
   }
 
-  postShow = (showToSave) => {
+  postShow = async (showToSave) => {
     const postInit = {
       method: 'POST',
       mode: 'cors',
@@ -62,16 +40,13 @@ class App extends Component {
       },
       body: JSON.stringify(showToSave)
     }
-    fetch('http://localhost:3001/shows', postInit)
-      .then((postShowsResponse) => {
-        return postShowsResponse.json()
-      })
-      .then((show) => {
+    try {
+    const postShowsResponse = await fetch('http://localhost:3001/shows', postInit)
+        const show = await postShowsResponse.json()
         this.createShow(show)
-      })
-      .catch((error) => {
+    } catch (error) {
         this.setState({ errorMessage: error })
-      })
+      }
   }
 
   renderError = () => {
